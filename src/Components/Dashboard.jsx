@@ -1,29 +1,10 @@
-import { useEffect, useState } from "react";
-
-const Courses = ({ enrolledCourses }) => {
-  const [progress, setProgress] = useState({});
-
-  // Load saved progress from localStorage on first render
-  useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("courseProgress")) || {};
-    setProgress(saved);
-  }, []);
-
-  // Handle marking course as completed
-  const handleProgressClick = (id) => {
-    const updated = { ...progress, [id]: true };
-    setProgress(updated);
-    localStorage.setItem("courseProgress", JSON.stringify(updated));
-  };
-
+const Dashboard = ({ enrolledCourses, progress, onProgressClick }) => {
   return (
-    <div id="courses" className="bg-gray-300 py-20 px-4 rounded shadow-lg mt-6">
+    <div className="bg-gray-300 py-20 px-4 mt-1">
       <h2 className="text-center text-4xl pb-10 font-bold">📘 My Enrolled Courses</h2>
 
       {enrolledCourses.length === 0 ? (
-        <p className="text-gray-600 text-center">
-          You haven't enrolled in any courses yet.
-        </p>
+        <p className="text-gray-600 text-center">You haven't enrolled in any courses yet.</p>
       ) : (
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {enrolledCourses.map((course) => {
@@ -37,8 +18,6 @@ const Courses = ({ enrolledCourses }) => {
                 <div className="flex flex-col items-center space-y-3">
                   <i className={`${course.icon} text-4xl text-green-600`}></i>
                   <h3 className="text-lg font-semibold">{course.title}</h3>
-
-                  {/* Read Me Button */}
                   <a
                     href={course.link}
                     target="_blank"
@@ -47,10 +26,8 @@ const Courses = ({ enrolledCourses }) => {
                   >
                     Read Me
                   </a>
-
-                  {/* Progress Button */}
                   <button
-                    onClick={() => handleProgressClick(course.id)}
+                    onClick={() => onProgressClick(course.id)}
                     className={`px-4 py-2 rounded-full shadow text-white transition-all ${
                       isCompleted
                         ? "bg-green-500 hover:bg-green-600"
@@ -69,4 +46,4 @@ const Courses = ({ enrolledCourses }) => {
   );
 };
 
-export default Courses;
+export default Dashboard;
