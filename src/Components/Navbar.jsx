@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-gray-400 shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Course_Tracker</h1>
+        <h1 className="text-2xl font-bold">Prime_Course</h1>
         <nav className="hidden md:flex space-x-5">
           {isLoggedIn ? (
             <>

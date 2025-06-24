@@ -6,7 +6,7 @@ const Banner = () => {
 
   useEffect(() => {
     const typed = new Typed(typedRef.current, {
-      strings: ["Course_Tracker"],
+      strings: ["Prime_Course"],
       typeSpeed: 60,
       backSpeed: 30,
       backDelay: 1200,
@@ -17,7 +17,7 @@ const Banner = () => {
   }, []);
 
   return (
-    <div id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-200 via-gray-300 to-black text-white px-6">
+    <div id="banner" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-200 via-gray-300 to-black text-white">
       <div className="max-w-7xl w-full flex flex-col md:flex-row items-center justify-between gap-12">
         
         {/* Left Content */}
@@ -29,7 +29,7 @@ const Banner = () => {
             Welcome in 
           </h1>
           <h3 className="text-xl md:text-2xl">
-            <span className="text-orange-400 font-semibold underline" ref={typedRef}></span>
+            <span className="text-orange-400 font-semibold" ref={typedRef}></span>
           </h3>
 
           {/* Social Links */}
