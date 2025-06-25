@@ -1,13 +1,22 @@
-const Dashboard = ({ enrolledCourses, progress, onProgressClick }) => {
+const Dashboard = ({
+  enrolledCourses,
+  progress,
+  onProgressClick,
+  selectedCourseId,
+}) => {
+  const filteredCourses = selectedCourseId
+    ? enrolledCourses.filter((c) => c.id === selectedCourseId)
+    : enrolledCourses;
+
   return (
-    <div className="bg-gray-300 py-20 px-4 mt-1">
+    <div className="bg-gray-300 py-20 px-4 mt-1 ml-64">
       <h2 className="text-center text-4xl pb-10 font-bold">📘 My Enrolled Courses</h2>
 
-      {enrolledCourses.length === 0 ? (
-        <p className="text-gray-600 text-center">You haven't enrolled in any courses yet.</p>
+      {filteredCourses.length === 0 ? (
+        <p className="text-gray-600 text-center">No course found.</p>
       ) : (
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {enrolledCourses.map((course) => {
+          {filteredCourses.map((course) => {
             const isCompleted = progress[course.id];
 
             return (

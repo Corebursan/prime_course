@@ -1,42 +1,42 @@
-// File: components/CourseManager.jsx
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import CourseList from "./CourseList";
 import Dashboard from "./Dashboard";
+import {
+  getEnrolledCourses,
+  saveEnrolledCourses,
+  getCourseProgress,
+  saveCourseProgress,
+} from "../utils/storage";
 
 const CourseManager = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
-  const [progress, setProgress] = useState({}); // For storing course completion
+  const [progress, setProgress] = useState({});
 
-  // Load enrolled courses and progress from localStorage
+  // Load once on mount
   useEffect(() => {
-    const savedCourses = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
-    const savedProgress = JSON.parse(localStorage.getItem("courseProgress")) || {};
-    setEnrolledCourses(savedCourses);
-    setProgress(savedProgress);
+    setEnrolledCourses(getEnrolledCourses());
+    setProgress(getCourseProgress());
   }, []);
 
-  // Persist enrolled courses on update
+  // Save enrolled courses
   useEffect(() => {
-    localStorage.setItem("enrolledCourses", JSON.stringify(enrolledCourses));
+    saveEnrolledCourses(enrolledCourses);
   }, [enrolledCourses]);
 
-  // Persist progress on update
+  // Save progress
   useEffect(() => {
-    localStorage.setItem("courseProgress", JSON.stringify(progress));
+    saveCourseProgress(progress);
   }, [progress]);
 
-  // Add course to enrolledCourses if not already there
   const handleEnroll = (course) => {
     if (!enrolledCourses.find((c) => c.id === course.id)) {
       setEnrolledCourses((prev) => [...prev, course]);
     }
   };
 
-  // Mark a course as complete
   const handleProgressClick = (courseId) => {
-    const updated = { ...progress, [courseId]: true };
-    setProgress(updated);
+    setProgress((prev) => ({ ...prev, [courseId]: true }));
   };
 
   return (
