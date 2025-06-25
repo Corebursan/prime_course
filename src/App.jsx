@@ -1,30 +1,35 @@
-// File: App.jsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import AuthForm from "./components/AuthForm";
-import Home from "./components/Home";
-import Footer from "./components/Footer";
-import Notes from "./components/Notes";
-import CourseManager from "./components/CourseManager";
+// src/App.jsx
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginForm from './components/Auth/LoginForm';
+import RegisterForm from './components/Auth/RegisterForm';
+import Navbar from './components/Layout/Navbar';
+import Footer from './components/Layout/Footer';
+import Sidebar from './components/Layout/Sidebar';
+import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
+import { AuthProvider } from './context/AuthContext';
+import PrivateRoute from './PrivateRoute';
 
-function App() {
+const App = () => {
   return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
+    <AuthProvider>
+      <Router>
         <Navbar />
-        <div className="flex-grow pt-24 px-4">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<AuthForm mode="login" />} />
-            <Route path="/register" element={<AuthForm mode="register" />} />
-            <Route path="/*" element={<CourseManager />} />
-            <Route path="/notes" element={<Notes />} />
-          </Routes>
+        <div className="flex">
+          <Sidebar />
+          <main className="flex-1 p-4">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/register" element={<RegisterForm />} />
+              <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+            </Routes>
+          </main>
         </div>
         <Footer />
-      </div>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
-}
+};
 
 export default App;
